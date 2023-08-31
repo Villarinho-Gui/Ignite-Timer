@@ -1,34 +1,33 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const HeaderComponent = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  nav {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    gap: 0.5rem;
 
+    a {
+      width: 3rem;
+      height: 3rem;
 
-    nav {
-        display: flex;
-        gap: 0.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-        a {
-            width: 3rem;
-            height: 3rem;
+      color: ${(props) => props.theme['gray-100']};
+      border-radius: 4px;
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
+      &:hover {
+        background-color: ${(props) => props.theme['gray-600']};
+        border-radius: 4px;
+      }
 
-            color: ${(props) => props.theme["gray-100"]};
-            border-radius: 4px;
-
-            &:hover {
-                background-color: ${props => props.theme["gray-600"]};
-                border-radius: 4px;
-            }
-
-            &.active {
-                color: ${props => props.theme["green-500"]};
-            }
-        }
+      &.active {
+        color: ${(props) => props.theme['green-500']};
+      }
     }
+  }
 `
