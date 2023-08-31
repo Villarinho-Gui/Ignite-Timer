@@ -1,5 +1,5 @@
 import { Play } from "phosphor-react";
-import { CountDownContainer, FormContainer, HomeComponent } from "./styles";
+import { CountDownContainer, FormContainer, HomeComponent, MinutesAmountInput, Separator, StartCountDownButton, TaskInput } from "./styles";
 
 export function Home() {
     return (
@@ -7,10 +7,27 @@ export function Home() {
             <form action="">
                 <FormContainer>
                     <label htmlFor="task">Vou trabalhar em: </label>
-                    <input id="task" type="text" />
-                    
+                    <TaskInput 
+                        id="task" 
+                        type="text" 
+                        placeholder="Dê um nome para o seu projeto" 
+                        list="tasks-suggestions"
+                    />
+                    <datalist id="tasks-suggestions">
+                        <option value="Projeto 1" />
+                        <option value="Projeto 2" />
+                        <option value="Projeto 3" />
+                    </datalist>
                     <label htmlFor="minutesAmount">durante</label>
-                    <input id="minutesAmount" type="number" />
+                    <MinutesAmountInput 
+                        id="minutesAmount" 
+                        type="number" 
+                        placeholder="00"
+                        step={5}
+                        min={5}
+                        max={60}
+                        maxLength={2}
+                    />
 
                     <span>minutos.</span>
                 </FormContainer>
@@ -21,7 +38,7 @@ export function Home() {
                     <span>
                         0
                     </span>
-                    <span>:</span>
+                    <Separator>:</Separator>
                     <span>
                         0
                     </span>
@@ -30,7 +47,7 @@ export function Home() {
                     </span>
                 </CountDownContainer>
 
-                <button type="submit"><Play size={24}/>Começar</button>
+                <StartCountDownButton type="submit" disabled><Play size={24}/>Começar</StartCountDownButton>
             </form>
         </HomeComponent>
     )
