@@ -1,6 +1,6 @@
 import { Scroll, Timer } from 'phosphor-react'
 import { NavLink } from 'react-router-dom'
-import logoIgnite from '../../../public/images/logo.svg'
+import logoIgnite from '../../images/logo.svg'
 import { HeaderComponent } from './styles'
 
 export function Header() {
