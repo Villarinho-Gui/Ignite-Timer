@@ -106,11 +106,10 @@ export const StartCountDownButton = styled.button`
   font-weight: bold;
 
   &:disabled {
-    opacity: 0.7;
     cursor: not-allowed;
   }
 
-  &:not(:disabled)hover {
+  &:not(:disabled):hover {
     background: ${(props) => props.theme['green-700']};
   }
 `
