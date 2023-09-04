@@ -8,11 +8,29 @@ import {
   StartCountDownButton,
   TaskInput,
 } from './styles'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as zod from 'zod'
+
+const newCycleFormValidationSchema = zod.object({
+  task: zod.string().min(1, 'Informe a tarefa'),
+  minutesAmount: zod.number().min(5).max(60),
+})
 
 export function Home() {
+  const { register, handleSubmit, watch } = useForm({
+    resolver: zodResolver(newCycleFormValidationSchema),
+  })
+
+  function handleCreateNewCycle(data: unknown) {
+    console.log(data)
+  }
+
+  const task = watch('task')
+  const isDisabled = !(task || '').trim()
   return (
     <HomeComponent>
-      <form action="">
+      <form onSubmit={handleSubmit(handleCreateNewCycle)}>
         <FormContainer>
           <label htmlFor="task">Vou trabalhar em: </label>
           <TaskInput
@@ -20,6 +38,7 @@ export function Home() {
             type="text"
             placeholder="Dê um nome para o seu projeto"
             list="tasks-suggestions"
+            {...register('task')}
           />
           <datalist id="tasks-suggestions">
             <option value="Projeto 1" />
@@ -35,6 +54,7 @@ export function Home() {
             min={5}
             max={60}
             maxLength={2}
+            {...register('minutesAmount', { valueAsNumber: true })}
           />
 
           <span>minutos.</span>
@@ -47,7 +67,7 @@ export function Home() {
           <span>0</span>
         </CountDownContainer>
 
-        <StartCountDownButton type="submit" disabled>
+        <StartCountDownButton type="submit" disabled={isDisabled}>
           <Play size={24} />
           Começar
         </StartCountDownButton>
