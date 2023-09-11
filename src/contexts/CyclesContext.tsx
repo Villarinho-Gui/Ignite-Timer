@@ -47,6 +47,7 @@ export function CyclesContextProvider({
   function markCurrentCycleAsFinished() {
     setCycles((state) =>
       state.map((cycle) => {
+        setActiveCycleId(null)
         if (cycle.id === activeCycleId) {
           return { ...cycle, finishedDate: new Date() }
         } else {
