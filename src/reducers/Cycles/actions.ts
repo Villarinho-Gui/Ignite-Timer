@@ -1,5 +1,5 @@
 import { ActionTypesEnum } from '../../enums/actions-enum'
-import { CycleProps } from './reducer'
+import { CycleProps } from '../../interfaces/cycles'
 
 export function addNewCycleAction(newCycle: CycleProps) {
   return {
