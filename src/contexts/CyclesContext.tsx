@@ -1,14 +1,11 @@
 import { ReactNode, createContext, useReducer, useState } from 'react'
-import { CycleProps, cyclesReducer } from '../reducers/Cycles/reducer'
+import { cyclesReducer } from '../reducers/Cycles/reducer'
 import {
   addNewCycleAction,
   interruptCurrentCycleAction,
   markCurrentCycleAsFinishedAction,
 } from '../reducers/Cycles/actions'
-interface CreateCycleData {
-  task: string
-  minutesAmount: number
-}
+import { CreateCycleData, CycleProps } from '../interfaces/cycles'
 interface CyclesContext {
   cycles: CycleProps[]
   activeCycle: CycleProps | undefined
