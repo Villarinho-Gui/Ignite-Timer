@@ -4,22 +4,16 @@ import {
   StartCountDownButton,
   StopCountDownButton,
 } from './styles'
-import * as zod from 'zod'
 import { CountDown } from './components/CountDown'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NewCycleForm } from './components/NewCycleForm'
 import { useContext } from 'react'
 import { CyclesContext } from '../../contexts/CyclesContext'
-
-const newCycleFormValidationSchema = zod.object({
-  task: zod.string().min(1, 'Informe a tarefa'),
-  minutesAmount: zod
-    .number()
-    .min(5, 'O ciclo precisa ser de no mínimo 5 minutos')
-    .max(60, 'O ciclo precisa ser de no máximo 60 minutos'),
-})
-type NewCycleFormDataType = zod.infer<typeof newCycleFormValidationSchema>
+import {
+  NewCycleFormDataType,
+  newCycleFormValidationSchema,
+} from '../../schema/zod-schema'
 
 export function Home() {
   const { createNewCycle, interruptCurrentCycle, activeCycle } =
