@@ -1,6 +1,10 @@
 import { ReactNode, createContext, useReducer, useState } from 'react'
-import { CycleProps, cyclesReducer } from '../reducers/cycles'
-import { ActionTypesEnum } from '../enums/actions-enum'
+import { CycleProps, cyclesReducer } from '../reducers/Cycles/reducer'
+import {
+  addNewCycleAction,
+  interruptCurrentCycleAction,
+  markCurrentCycleAsFinishedAction,
+} from '../reducers/Cycles/actions'
 interface CreateCycleData {
   task: string
   minutesAmount: number
@@ -39,15 +43,6 @@ export function CyclesContextProvider({
     setAmountSecondsPassed(seconds)
   }
 
-  function markCurrentCycleAsFinished() {
-    dispatch({
-      type: ActionTypesEnum.MARK_CURRENT_CYCLE_AS_FINISHED,
-      payload: {
-        activeCycleId,
-      },
-    })
-  }
-
   function createNewCycle(data: CreateCycleData) {
     const id = String(new Date().getTime())
     const newCycle: CycleProps = {
@@ -57,23 +52,17 @@ export function CyclesContextProvider({
       startDate: new Date(),
     }
 
-    dispatch({
-      type: ActionTypesEnum.ADD_NEW_CYCLE,
-      payload: {
-        newCycle,
-      },
-    })
+    dispatch(addNewCycleAction(newCycle))
 
     setAmountSecondsPassed(0)
   }
 
+  function markCurrentCycleAsFinished() {
+    dispatch(markCurrentCycleAsFinishedAction())
+  }
+
   function interruptCurrentCycle() {
-    dispatch({
-      type: ActionTypesEnum.INTERRUPT_CURRENT_CYCLE,
-      payload: {
-        activeCycleId,
-      },
-    })
+    dispatch(interruptCurrentCycleAction())
   }
 
   return (
