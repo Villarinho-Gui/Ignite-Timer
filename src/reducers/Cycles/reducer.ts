@@ -1,19 +1,6 @@
 import { ActionTypesEnum } from '../../enums/actions-enum'
 import { produce } from 'immer'
-
-export interface CycleProps {
-  id: string
-  task: string
-  minutesAmount: number
-  startDate: Date
-  interruptedDate?: Date
-  finishedDate?: Date
-}
-
-interface CyclesState {
-  cycles: CycleProps[]
-  activeCycleId: string | null
-}
+import { CyclesState } from '../../interfaces/cycles'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function cyclesReducer(state: CyclesState, action: any) {
