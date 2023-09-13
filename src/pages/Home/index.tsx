@@ -13,7 +13,7 @@ import { CyclesContext } from '../../contexts/CyclesContext'
 import {
   NewCycleFormDataType,
   newCycleFormValidationSchema,
-} from '../../schema/zod-schema'
+} from '../../schema/zod-schema-newCycleForm'
 
 export function Home() {
   const { createNewCycle, interruptCurrentCycle, activeCycle } =
