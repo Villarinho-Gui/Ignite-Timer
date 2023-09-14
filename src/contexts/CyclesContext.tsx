@@ -1,4 +1,10 @@
-import { ReactNode, createContext, useReducer, useState } from 'react'
+import {
+  ReactNode,
+  createContext,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react'
 import { cyclesReducer } from '../reducers/Cycles/reducer'
 import {
   addNewCycleAction,
@@ -6,6 +12,7 @@ import {
   markCurrentCycleAsFinishedAction,
 } from '../reducers/Cycles/actions'
 import { CreateCycleData, CycleProps } from '../interfaces/cycles'
+import { differenceInSeconds } from 'date-fns'
 interface CyclesContext {
   cycles: CycleProps[]
   activeCycle: CycleProps | undefined
@@ -25,16 +32,39 @@ interface CyclesContextProviderProps {
 export function CyclesContextProvider({
   children,
 }: CyclesContextProviderProps) {
-  const [cyclesState, dispatch] = useReducer(cyclesReducer, {
-    cycles: [],
-    activeCycleId: null,
+  const [cyclesState, dispatch] = useReducer(
+    cyclesReducer,
+    {
+      cycles: [],
+      activeCycleId: null,
+    },
+    (initialState) => {
+      const storageStateAsJSON = localStorage.getItem(
+        '@ignite-timer:cycles-state-1.0.0',
+      )
+
+      if (storageStateAsJSON) {
+        return JSON.parse(storageStateAsJSON)
+      }
+
+      return initialState
+    },
+  )
+  const { cycles, activeCycleId } = cyclesState
+  const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId)
+
+  const [amountSecondsPassed, setAmountSecondsPassed] = useState(() => {
+    if (activeCycle) {
+      return differenceInSeconds(new Date(), new Date(activeCycle.startDate))
+    }
+
+    return 0
   })
 
-  const [amountSecondsPassed, setAmountSecondsPassed] = useState(0)
-
-  const { cycles, activeCycleId } = cyclesState
-
-  const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId)
+  useEffect(() => {
+    const stateJson = JSON.stringify(cyclesState)
+    localStorage.setItem('@ignite-timer:cycles-state-1.0.0', stateJson)
+  }, [cyclesState])
 
   function setSecondsPassed(seconds: number) {
     setAmountSecondsPassed(seconds)
@@ -50,7 +80,6 @@ export function CyclesContextProvider({
     }
 
     dispatch(addNewCycleAction(newCycle))
-
     setAmountSecondsPassed(0)
   }
 
